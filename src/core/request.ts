@@ -9,7 +9,7 @@ type Params = {
 async function request<T>({ path, method, data }: Params) {
   const response = await axios({
     url: path,
-    baseURL: 'http://localhost:8000',
+    baseURL: process.env.REACT_APP_BASE_URL,
     method,
     data,
   });
