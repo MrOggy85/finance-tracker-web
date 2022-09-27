@@ -7,6 +7,7 @@ import Future from './pages/Future';
 import DailyCheckIn from './pages/DailyCheckIn';
 import Account from './pages/Account';
 import Login from './pages/Login';
+import Salary from './pages/Salary';
 
 type LinkItemProps = {
   url: string;
@@ -47,6 +48,9 @@ function App() {
           <LinkItem url="/login" text="Login" />
         </NavItem>
         <NavItem>
+          <LinkItem url="/salary" text="Salary" />
+        </NavItem>
+        <NavItem>
           <LinkItem url="/daily-check-in" text="Check-In" />
         </NavItem>
       </Nav>
@@ -54,6 +58,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/account" element={<Account />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/salary" element={<Salary />} />
       </Routes>
       <Future visible={location.pathname === '/future'} />
       <DailyCheckIn visible={location.pathname === '/daily-check-in'} />
