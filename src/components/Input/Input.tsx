@@ -11,7 +11,9 @@ type Props = {
 const Input = ({ label, subLabel = [], value, type, setValue }: Props) => {
   return (
     <Form.Group className="mb-3">
-      <Form.Label style={{ display: 'block' }}>{label}</Form.Label>
+      <Form.Label style={{ display: 'block', fontWeight: 'bold' }}>
+        {label}
+      </Form.Label>
       {subLabel.map((x) => (
         <Form.Label key={x} style={{ display: 'block' }}>
           {x}

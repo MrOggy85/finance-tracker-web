@@ -69,6 +69,17 @@ const Salary = () => {
     Number(lifePlanSubsidy) +
     sumAllowance;
 
+  const totalDeductable =
+    sumSocialInsurance +
+    Number(incomeTax) +
+    Number(residentTax) +
+    Number(lifePlan);
+  const grossSalary =
+    sumMonthlySalary +
+    Number(insufficientDeemedLabor) +
+    Number(lifePlanSubsidy) +
+    sumAllowance;
+
   const onClick = () => {
     console.log('onClick');
   };
@@ -146,7 +157,7 @@ const Salary = () => {
       <Input label="Hostname" value={h} setValue={setH} />
       <Input label="Port" value={port} setValue={setPort} />
       <Input label="Database Name" value={db} setValue={setDb} /> */}
-      <Container style={{ background: '#63a4e62b', paddingBottom: 5 }}>
+      <Container style={{ background: '#c4b96121', paddingBottom: 5 }}>
         <h2>Insurance</h2>
         <Input
           label="Health Insurance"
@@ -169,7 +180,7 @@ const Salary = () => {
           setValue={setUnemployment}
           type="number"
         />
-        <Alert>
+        <Alert variant="warning">
           <p>
             SUM SOCIAL_INSURANCE {`(${SUM_SOCIAL_INSURANCE.join('/n')})`}:{' '}
             {displayInYen(sumSocialInsurance)}
@@ -178,9 +189,9 @@ const Salary = () => {
         </Alert>
       </Container>
 
-      <Container style={{ background: '#63a4e62b', paddingBottom: 5 }}>
+      <Container style={{ background: '#e663a92b', paddingBottom: 5 }}>
         <h2>Tax</h2>
-        <Alert>
+        <Alert variant="danger">
           <p>
             Taxable Income {`(${TAXABLE_INCOME.join('/n')})`}:{' '}
             {displayInYen(taxableIncome)}
@@ -193,7 +204,7 @@ const Salary = () => {
           setValue={setIncomeTax}
           type="number"
         />
-        <Alert>
+        <Alert variant="danger">
           <p>
             Income Tax Rate:
             {Number(incomeTax) / taxableIncome}
@@ -206,6 +217,23 @@ const Salary = () => {
           setValue={setResidentTax}
           type="number"
         />
+      </Container>
+      <Container style={{ background: '#a2e76d2b', paddingBottom: 5 }}>
+        <h2>Summary</h2>
+        <Alert variant="success">
+          <p>
+            Gross Salary (総支給額):
+            {displayInYen(grossSalary)}
+          </p>
+          <p>
+            Total Deductable (総控除額):
+            {displayInYen(totalDeductable)}
+          </p>
+          <p>
+            Net Salary (差引支給額):
+            {displayInYen(grossSalary - totalDeductable)}
+          </p>
+        </Alert>
       </Container>
       <Button color="primary" onClick={onClick}>
         Save
