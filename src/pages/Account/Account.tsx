@@ -125,26 +125,6 @@ const AccountComp = () => {
           </tr>
         </thead>
         <tbody>
-          {account?.balances.map((x) => (
-            <tr key={x.id}>
-              <td>
-                <Button
-                  color="danger"
-                  type="button"
-                  disabled={loading}
-                  onClick={() => {
-                    removeBalance(x.id);
-                  }}
-                >
-                  {loading ? <Spinner size="sm"> </Spinner> : <FiTrash2 />}
-                </Button>
-              </td>
-
-              <td>{x.id}</td>
-              <td>{format(parseISO(x.date), 'yyyy-MM-dd')}</td>
-              <td>{displayInYen(x.amount)}</td>
-            </tr>
-          ))}
           {account && (
             <tr>
               <td>
@@ -191,6 +171,26 @@ const AccountComp = () => {
               </td>
             </tr>
           )}
+          {account?.balances.map((x) => (
+            <tr key={x.id}>
+              <td>
+                <Button
+                  color="danger"
+                  type="button"
+                  disabled={loading}
+                  onClick={() => {
+                    removeBalance(x.id);
+                  }}
+                >
+                  {loading ? <Spinner size="sm"> </Spinner> : <FiTrash2 />}
+                </Button>
+              </td>
+
+              <td>{x.id}</td>
+              <td>{format(parseISO(x.date), 'yyyy-MM-dd')}</td>
+              <td>{displayInYen(x.amount)}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
 
