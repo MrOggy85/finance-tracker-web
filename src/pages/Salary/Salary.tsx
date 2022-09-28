@@ -1,7 +1,10 @@
+import format from 'date-fns/format';
 import { useState } from 'react';
 import { Container, Button, Alert, FormLabel } from 'react-bootstrap';
 import Input from '../../components/Input';
 import displayInYen from '../../core/displayInYen';
+import { add } from '../../core/redux/salarySlice';
+import { useAppDispatch } from '../../core/redux/useAppDispatch';
 
 const BASE_SALARY = ['基本給'];
 const DEEMED_LABOR = [
@@ -37,6 +40,9 @@ const RESIDENT_TAX = ['住民税'];
 const TAXABLE_INCOME = ['課税対象額'];
 
 const Salary = () => {
+  const dispatch = useAppDispatch();
+
+  const [date, setDate] = useState(new Date());
   const [baseSalary, setBaseSalary] = useState('');
   const [deemedLabor, setDeemedLabor] = useState('');
   const [insufficientDeemedLabor, setInsufficientDeemedLabor] = useState('');
@@ -81,11 +87,36 @@ const Salary = () => {
     sumAllowance;
 
   const onClick = () => {
-    console.log('onClick');
+    dispatch(
+      add({
+        date,
+        baseSalary: Number(baseSalary),
+        deemedLabor: Number(deemedLabor),
+        insufficientDeemedLabor: Number(insufficientDeemedLabor),
+        lifePlan: Number(lifePlan),
+        lifePlanSubsidy: Number(lifePlanSubsidy),
+        commuterAllowance: Number(commuterAllowance),
+        remoteWorkerPay: Number(remoteWorkerPay),
+        healthInsurance: Number(healthInsurance),
+        pension: Number(pension),
+        unemployment: Number(unemployment),
+        incomeTax: Number(incomeTax),
+        residentTax: Number(residentTax),
+      })
+    );
   };
 
   return (
     <Container style={{ marginTop: 10, marginBottom: 30 }}>
+      <Input
+        label="Payment Date"
+        type="date"
+        value={format(date, 'yyyy-MM-dd')}
+        setValue={(value) => {
+          setDate(new Date(value));
+        }}
+      />
+
       <Container style={{ background: '#63a4e62b', paddingBottom: 5 }}>
         <h2>Income</h2>
         <Input
@@ -153,10 +184,6 @@ const Salary = () => {
         </p>
         <p>({'Commuter Allowance + Remote Worker Pay'})</p>
       </Alert>
-      {/* <Input label="Password" value={pw} setValue={setPw} />
-      <Input label="Hostname" value={h} setValue={setH} />
-      <Input label="Port" value={port} setValue={setPort} />
-      <Input label="Database Name" value={db} setValue={setDb} /> */}
       <Container style={{ background: '#c4b96121', paddingBottom: 5 }}>
         <h2>Insurance</h2>
         <Input
