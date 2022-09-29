@@ -7,7 +7,8 @@ import Future from './pages/Future';
 import DailyCheckIn from './pages/DailyCheckIn';
 import Account from './pages/Account';
 import Login from './pages/Login';
-import Salary from './pages/Salary';
+import SalaryList from './pages/Salary/List';
+import SalaryEntry from './pages/Salary/Entry';
 
 type LinkItemProps = {
   url: string;
@@ -31,6 +32,7 @@ const LinkItem = ({ url, text }: LinkItemProps) => {
 
 function App() {
   const location = useLocation();
+
   return (
     <>
       <Nav variant="tabs">
@@ -47,9 +49,16 @@ function App() {
         <NavItem>
           <LinkItem url="/login" text="Login" />
         </NavItem>
-        <NavItem>
-          <LinkItem url="/salary" text="Salary" />
-        </NavItem>
+        {location.pathname === '/salary/add' ? (
+          <NavItem>
+            <LinkItem url="/salary/add" text="Salary Entry" />
+          </NavItem>
+        ) : (
+          <NavItem>
+            <LinkItem url="/salary" text="Salary" />
+          </NavItem>
+        )}
+
         <NavItem>
           <LinkItem url="/daily-check-in" text="Check-In" />
         </NavItem>
@@ -58,7 +67,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/account" element={<Account />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/salary" element={<Salary />} />
+        <Route path="/salary" element={<SalaryList />} />
+        <Route path="/salary/add" element={<SalaryEntry />} />
       </Routes>
       <Future visible={location.pathname === '/future'} />
       <DailyCheckIn visible={location.pathname === '/daily-check-in'} />

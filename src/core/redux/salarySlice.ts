@@ -1,23 +1,32 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { EmptyObject } from '../../types';
 import * as salary from '../db/salary';
+import type { Salary } from '../db/types';
 
 const NAMESPACE = 'salary';
+
+export const getAll = createAsyncThunk<Salary[], void, EmptyObject>(
+  `${NAMESPACE}/getAll`,
+  async (_params, _thunkApi) => {
+    const salaries = await salary.getAll();
+    return salaries;
+  }
+);
 
 type Add = Parameters<typeof salary.add>[0];
 
 export const add = createAsyncThunk<void, Add, EmptyObject>(
   `${NAMESPACE}/add`,
-  async (params, _thunkApi) => {
+  async (params, thunkApi) => {
     await salary.add(params);
-    // thunkApi.dispatch(getAll());
+    thunkApi.dispatch(getAll());
   }
 );
 
 const salarySlice = createSlice({
   name: NAMESPACE,
   initialState: {
-    list: [] as unknown[],
+    list: [] as Salary[],
     loading: false,
   },
   reducers: {},
@@ -29,6 +38,17 @@ const salarySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(add.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(getAll.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAll.fulfilled, (state, action) => {
+      state.list = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getAll.rejected, (state) => {
       state.loading = false;
     });
   },

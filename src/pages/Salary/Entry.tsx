@@ -1,10 +1,18 @@
 import format from 'date-fns/format';
 import { useState } from 'react';
-import { Container, Button, Alert, FormLabel } from 'react-bootstrap';
+import { Container, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Input from '../../components/Input';
 import displayInYen from '../../core/displayInYen';
 import { add } from '../../core/redux/salarySlice';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
+import {
+  getGrossSalary,
+  getNetSalary,
+  getSumMonthlySalary,
+  getSumSocialInsurance,
+  getTotalDeductable,
+} from './helpers';
 
 const BASE_SALARY = ['基本給'];
 const DEEMED_LABOR = [
@@ -58,11 +66,21 @@ const Salary = () => {
   const [incomeTax, setIncomeTax] = useState('');
   const [residentTax, setResidentTax] = useState('');
 
-  const sumMonthlySalary =
-    Number(baseSalary) + Number(deemedLabor) + Number(lifePlan);
+  // const sumMonthlySalary =
+  //   Number(baseSalary) + Number(deemedLabor) + Number(lifePlan);
+  const sumMonthlySalary = getSumMonthlySalary(
+    Number(baseSalary),
+    Number(deemedLabor),
+    Number(lifePlan)
+  );
 
-  const sumSocialInsurance =
-    Number(healthInsurance) + Number(pension) + Number(unemployment);
+  // const sumSocialInsurance =
+  //   Number(healthInsurance) + Number(pension) + Number(unemployment);
+  const sumSocialInsurance = getSumSocialInsurance(
+    Number(healthInsurance),
+    Number(pension),
+    Number(unemployment)
+  );
 
   const sumAllowance = Number(commuterAllowance) + Number(remoteWorkerPay);
 
@@ -75,16 +93,31 @@ const Salary = () => {
     Number(lifePlanSubsidy) +
     sumAllowance;
 
-  const totalDeductable =
-    sumSocialInsurance +
-    Number(incomeTax) +
-    Number(residentTax) +
-    Number(lifePlan);
-  const grossSalary =
-    sumMonthlySalary +
-    Number(insufficientDeemedLabor) +
-    Number(lifePlanSubsidy) +
-    sumAllowance;
+  // const totalDeductable =
+  //   sumSocialInsurance +
+  //   Number(incomeTax) +
+  //   Number(residentTax) +
+  //   Number(lifePlan);
+  const totalDeductable = getTotalDeductable(
+    sumSocialInsurance,
+    Number(incomeTax),
+    Number(residentTax),
+    Number(lifePlan)
+  );
+
+  // const grossSalary =
+  // sumMonthlySalary +
+  // Number(insufficientDeemedLabor) +
+  // Number(lifePlanSubsidy) +
+  // sumAllowance;
+  const grossSalary = getGrossSalary(
+    sumMonthlySalary,
+    Number(insufficientDeemedLabor),
+    Number(lifePlanSubsidy),
+    sumAllowance
+  );
+
+  const netSalary = getNetSalary(grossSalary, totalDeductable);
 
   const onClick = () => {
     dispatch(
@@ -108,6 +141,10 @@ const Salary = () => {
 
   return (
     <Container style={{ marginTop: 10, marginBottom: 30 }}>
+      <Link to="/salary">
+        <Button style={{ marginBottom: 15 }}>Back</Button>
+      </Link>
+
       <Input
         label="Payment Date"
         type="date"
@@ -258,11 +295,15 @@ const Salary = () => {
           </p>
           <p>
             Net Salary (差引支給額):
-            {displayInYen(grossSalary - totalDeductable)}
+            {displayInYen(netSalary)}
           </p>
         </Alert>
       </Container>
-      <Button color="primary" onClick={onClick}>
+      <Button
+        color="primary"
+        onClick={onClick}
+        style={{ marginBottom: 15, marginTop: 15 }}
+      >
         Save
       </Button>
     </Container>

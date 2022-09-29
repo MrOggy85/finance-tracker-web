@@ -1,20 +1,50 @@
 import dbRequest from '../dbRequest';
 import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import type { Salary } from './types';
 
-type Add = {
+export async function getAll() {
+  const salaryEntities = await dbRequest('SELECT * FROM salary');
+
+  const salaries: Salary[] = salaryEntities.rows.map((x) => {
+    const id = Number(x[13]) || -1;
+    const date = String(x[0]) || '';
+    const baseSalary = Number(x[1]) || -1;
+    const deemedLabor = Number(x[2]) || -1;
+    const insufficientDeemedLabor = Number(x[3]) || -1;
+    const lifePlan = Number(x[4]) || -1;
+    const lifePlanSubsidy = Number(x[5]) || -1;
+    const commuterAllowance = Number(x[6]) || -1;
+    const remoteWorkerPay = Number(x[7]) || -1;
+    const healthInsurance = Number(x[8]) || -1;
+    const pension = Number(x[9]) || -1;
+    const unemployment = Number(x[10]) || -1;
+    const incomeTax = Number(x[11]) || -1;
+    const residentTax = Number(x[12]) || -1;
+
+    return {
+      id,
+      date: format(parseISO(date), 'yyyy-MM-dd'),
+      baseSalary,
+      deemedLabor,
+      insufficientDeemedLabor,
+      lifePlan,
+      lifePlanSubsidy,
+      commuterAllowance,
+      remoteWorkerPay,
+      healthInsurance,
+      pension,
+      unemployment,
+      incomeTax,
+      residentTax,
+    };
+  });
+
+  return salaries;
+}
+
+type Add = Omit<Salary, 'id' | 'date'> & {
   date: Date;
-  baseSalary: number;
-  deemedLabor: number;
-  insufficientDeemedLabor: number;
-  lifePlan: number;
-  lifePlanSubsidy: number;
-  commuterAllowance: number;
-  remoteWorkerPay: number;
-  healthInsurance: number;
-  pension: number;
-  unemployment: number;
-  incomeTax: number;
-  residentTax: number;
 };
 
 export async function add({
