@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Input, InputGroup, InputGroupText } from 'reactstrap';
+import { Container, InputGroup, Form } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import displayInYen from '../../core/displayInYen';
 
@@ -20,18 +20,19 @@ const InputField = ({
   disabled,
   step,
 }: InputFieldProps) => (
-  <InputGroup>
-    <InputGroupText>{label}</InputGroupText>
-    <Input
+  <InputGroup className="mb-3">
+    <InputGroup.Text>{label}</InputGroup.Text>
+    <Form.Control
+      placeholder="Recipient's username"
+      type="number"
       step={step}
       disabled={disabled}
-      type="number"
       value={value}
       onChange={({ target: { value } }) => {
         onChange(Number(value));
       }}
     />
-    <InputGroupText>{displayAfter}</InputGroupText>
+    <InputGroup.Text>{displayAfter}</InputGroup.Text>
   </InputGroup>
 );
 

@@ -1,5 +1,4 @@
-import { Container, Table } from 'reactstrap';
-import Alert from 'react-bootstrap/Alert';
+import { Container, Table, Alert } from 'react-bootstrap';
 import displayInYen from '../../core/displayInYen';
 import format from 'date-fns/format';
 import type { Account } from '../../core/redux/types';

@@ -1,16 +1,4 @@
-import {
-  Button,
-  Container,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  ButtonDropdown,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Spinner,
-  Table,
-} from 'reactstrap';
+import { Button, Container, Spinner, Table } from 'react-bootstrap';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { useState } from 'react';
@@ -23,10 +11,11 @@ import {
   addBalance as addBalanceAction,
   rename,
 } from '../../core/redux/accountSlice';
-// import useDispatch from '../../core/redux/useDispatch';
 import displayInYen from '../../core/displayInYen';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
+import Select from '../../components/Select';
+import Input from '../../components/Input';
 
 const AccountComp = () => {
   const dispatch = useAppDispatch();
@@ -35,10 +24,6 @@ const AccountComp = () => {
   const [choosenAccountId, setChoosenAccountId] = useState<
     Account['id'] | null
   >(null);
-  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
-
-  const toggleAccountDropDown = () =>
-    setAccountDropdownOpen(!accountDropdownOpen);
 
   const addBalance = (id: number) => {
     console.log('addBalance...', id);
@@ -85,35 +70,18 @@ const AccountComp = () => {
 
   return (
     <Container style={{ marginTop: 10 }}>
-      <InputGroup style={{ marginBottom: 5 }}>
-        <InputGroupText>Account</InputGroupText>
-        <ButtonDropdown
-          addonType="append"
-          isOpen={accountDropdownOpen}
-          toggle={toggleAccountDropDown}
-        >
-          <DropdownToggle caret color="primary">
-            {account?.name || 'Choose Account'}
-          </DropdownToggle>
-          <DropdownMenu>
-            {accounts.map((x) => (
-              <DropdownItem
-                key={x.id}
-                onClick={() => {
-                  const acc = accounts.find((a) => a.id === x.id);
-                  if (!acc) {
-                    throw new Error(`No Account found... ${x.id}`);
-                  }
-                  setChoosenAccountId(acc.id);
-                }}
-              >
-                {x.name}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </ButtonDropdown>
-      </InputGroup>
-
+      <div style={{ width: '300px' }}>
+        <Select
+          label="Account"
+          emptyOptionLabel="Select Account"
+          options={accounts.map((x) => ({
+            value: x.id.toString(),
+            label: x.name,
+          }))}
+          value={choosenAccountId?.toString() || ''}
+          setValue={(v) => setChoosenAccountId(Number(v))}
+        />
+      </div>
       <Table bordered>
         <thead>
           <tr>
@@ -137,16 +105,23 @@ const AccountComp = () => {
                     addBalance(account.id);
                   }}
                 >
-                  {loading ? <Spinner size="sm"> </Spinner> : 'ADD'}
+                  {loading ? (
+                    <Spinner animation="border" size="sm">
+                      {' '}
+                    </Spinner>
+                  ) : (
+                    'ADD'
+                  )}
                 </Button>
               </td>
               <td />
               <td>
                 <Input
+                  label=""
                   type="date"
                   value={format(newBalanceDate, 'yyyy-MM-dd')}
                   disabled={loading}
-                  onChange={({ target: { value } }) => {
+                  setValue={(value) => {
                     if (!value) {
                       return;
                     }
@@ -156,11 +131,14 @@ const AccountComp = () => {
               </td>
               <td>
                 <Input
+                  label=""
                   type="number"
-                  value={newBalanceAmount === 0 ? '' : newBalanceAmount}
+                  value={
+                    newBalanceAmount === 0 ? '' : newBalanceAmount.toString()
+                  }
                   disabled={loading}
-                  onChange={({ target: { value } }) => {
-                    setNewBalanceAmount(Number(value));
+                  setValue={(v) => {
+                    setNewBalanceAmount(Number(v));
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -175,14 +153,20 @@ const AccountComp = () => {
             <tr key={x.id}>
               <td>
                 <Button
-                  color="danger"
+                  variant="danger"
                   type="button"
                   disabled={loading}
                   onClick={() => {
                     removeBalance(x.id);
                   }}
                 >
-                  {loading ? <Spinner size="sm"> </Spinner> : <FiTrash2 />}
+                  {loading ? (
+                    <Spinner animation="border" size="sm">
+                      {' '}
+                    </Spinner>
+                  ) : (
+                    <FiTrash2 />
+                  )}
                 </Button>
               </td>
 
@@ -210,7 +194,7 @@ const AccountComp = () => {
               {editId === x.id ? (
                 <td>
                   <Button
-                    color="success"
+                    variant="success"
                     type="button"
                     disabled={loading}
                     onClick={() => {
@@ -218,23 +202,35 @@ const AccountComp = () => {
                     }}
                     style={{ marginRight: 5 }}
                   >
-                    {loading ? <Spinner size="sm"> </Spinner> : <FiCheck />}
+                    {loading ? (
+                      <Spinner animation="border" size="sm">
+                        {' '}
+                      </Spinner>
+                    ) : (
+                      <FiCheck />
+                    )}
                   </Button>
                   <Button
-                    color="danger"
+                    variant="danger"
                     type="button"
                     disabled={loading}
                     onClick={() => {
                       editAccountCancel();
                     }}
                   >
-                    {loading ? <Spinner size="sm"> </Spinner> : <FiX />}
+                    {loading ? (
+                      <Spinner animation="border" size="sm">
+                        {' '}
+                      </Spinner>
+                    ) : (
+                      <FiX />
+                    )}
                   </Button>
                 </td>
               ) : (
                 <td>
                   <Button
-                    color="success"
+                    variant="success"
                     type="button"
                     disabled={loading}
                     onClick={() => {
@@ -242,17 +238,29 @@ const AccountComp = () => {
                     }}
                     style={{ marginRight: 5 }}
                   >
-                    {loading ? <Spinner size="sm"> </Spinner> : <FiEdit />}
+                    {loading ? (
+                      <Spinner animation="border" size="sm">
+                        {' '}
+                      </Spinner>
+                    ) : (
+                      <FiEdit />
+                    )}
                   </Button>
                   <Button
-                    color="danger"
+                    variant="danger"
                     type="button"
                     disabled={loading}
                     onClick={() => {
                       removeAccount(x.id);
                     }}
                   >
-                    {loading ? <Spinner size="sm"> </Spinner> : <FiTrash2 />}
+                    {loading ? (
+                      <Spinner animation="border" size="sm">
+                        {' '}
+                      </Spinner>
+                    ) : (
+                      <FiTrash2 />
+                    )}
                   </Button>
                 </td>
               )}
@@ -261,10 +269,11 @@ const AccountComp = () => {
               <td>
                 {editId === x.id ? (
                   <Input
+                    label=""
                     value={editAccountTitle}
                     disabled={loading}
-                    onChange={(e) => {
-                      setEditAccountTitle(e.target.value);
+                    setValue={(value) => {
+                      setEditAccountTitle(value);
                     }}
                   />
                 ) : (
@@ -277,7 +286,7 @@ const AccountComp = () => {
           <tr>
             <td>
               <Button
-                color="primary"
+                variant="primary"
                 type="button"
                 style={{ marginRight: 5 }}
                 disabled={loading || newAccountTitle.trim().length === 0}
@@ -285,16 +294,23 @@ const AccountComp = () => {
                   addAccount(newAccountTitle);
                 }}
               >
-                {loading ? <Spinner size="sm"> </Spinner> : 'ADD'}
+                {loading ? (
+                  <Spinner animation="border" size="sm">
+                    {' '}
+                  </Spinner>
+                ) : (
+                  'ADD'
+                )}
               </Button>
             </td>
             <td />
             <td>
               <Input
+                label=""
                 value={newAccountTitle}
                 disabled={loading}
-                onChange={(e) => {
-                  setNewAccountTitle(e.target.value);
+                setValue={(value) => {
+                  setNewAccountTitle(value);
                 }}
               />
             </td>
