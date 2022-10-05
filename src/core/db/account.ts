@@ -42,17 +42,17 @@ export async function get(id: number): Promise<Account> {
   };
 }
 
-export function add(name: string) {
+export function add(_name: string) {
   // TODO
   return {} as Promise<void>;
 }
 
-export function remove(id: number) {
+export function remove(_id: number) {
   // TODO
   return {} as Promise<void>;
 }
 
-export function updateName(id: number, name: string) {
+export function updateName(_id: number, _name: string) {
   // TODO
   return {} as Promise<void>;
 }

@@ -20,8 +20,7 @@ const DEEMED_LABOR = [
   'Wages for imputed labor (equivalent to 45h)',
 ];
 const INSUFFICIENT_DEEMED_LABOR = ['不足控除'];
-const hej = ['在宅手当'];
-const COMMUTER_ALLOWENCE = ['通勤手当'];
+const COMMUTER_ALLOWENCE = ['通勤手当, 在宅手当'];
 const LIFE_PLAN_ALLOWANCE = [
   'LP(拠出金)',
   'ライフプラン手当',
@@ -30,8 +29,8 @@ const LIFE_PLAN_ALLOWANCE = [
 ];
 const LIFE_PLAN_SUBSIDY = ['確拠奨励金', '（掛金×10％）', 'Premium 10%'];
 
-const OVERTIME_PAY = ['超過勤務手当'];
-const EQUALIZATION_PAY = ['調整給'];
+const _OVERTIME_PAY = ['超過勤務手当'];
+const _EQUALIZATION_PAY = ['調整給'];
 const REMOTE_WORKER_PAY = ['R W 手当'];
 
 const SUM_MONTHLY_SALARY = ['月額給与'];

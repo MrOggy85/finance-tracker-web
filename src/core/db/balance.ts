@@ -3,13 +3,6 @@ import parseISO from 'date-fns/parseISO';
 import dbRequest from '../dbRequest';
 import type { Balance } from './types';
 
-type BalanceEntity = {
-  id: number;
-  amount: number;
-  accountId: number;
-  date: Date;
-};
-
 function mapEntityToModel(row: (string | number)[] | undefined): Balance {
   const id = Number(row?.[0]) || -1;
   const amount = Number(row?.[1]) || 0;
