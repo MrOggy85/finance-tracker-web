@@ -2,11 +2,11 @@ import { load } from './localStorage';
 import request from './request';
 
 type PostgresProxyResponse = {
-  command: 'SELECT'
+  command: 'SELECT';
   query: unknown;
   rowCount: number;
-  rows: (string | number)[][]
-}
+  rows: (string | number)[][];
+};
 
 async function dbRequest(q: string) {
   const u = load('U');

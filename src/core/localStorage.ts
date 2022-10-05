@@ -1,4 +1,4 @@
-type Key = 'U' | 'PW' | 'H' | 'PORT' | 'DB'
+type Key = 'U' | 'PW' | 'H' | 'PORT' | 'DB';
 
 export function save(key: Key, value: string): boolean {
   try {
