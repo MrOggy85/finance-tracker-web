@@ -49,7 +49,7 @@ export async function get(id: number): Promise<Account> {
 }
 
 export async function add(name: string): Promise<void> {
-  const sql = 'INSERT INTO public.account ("name") ' + `VALUES('${name})'`;
+  const sql = 'INSERT INTO public.account ("name") ' + `VALUES('${name}')`;
 
   await dbRequest(sql);
 }
