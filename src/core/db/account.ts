@@ -2,6 +2,12 @@ import dbRequest from '../dbRequest';
 import { getByAccountIds } from './balance';
 import { Account } from './types';
 
+/**
+ * Columns
+ * - id (integer, NOT NULL, Primary key)
+ * - name (string)
+ */
+
 export async function getAll() {
   const accountEntities = await dbRequest('SELECT * FROM account');
   const accountIds: number[] = [];
@@ -42,9 +48,10 @@ export async function get(id: number): Promise<Account> {
   };
 }
 
-export function add(_name: string) {
-  // TODO
-  return {} as Promise<void>;
+export async function add(name: string): Promise<void> {
+  const sql = 'INSERT INTO public.account ("name") ' + `VALUES('${name})'`;
+
+  await dbRequest(sql);
 }
 
 export function remove(_id: number) {
