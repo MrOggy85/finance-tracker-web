@@ -86,17 +86,28 @@ const accountSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAll.fulfilled, (state, action) => {
-      state.accounts = action.payload;
-      state.loading = false;
-    });
-
     builder
+      .addCase(getAll.fulfilled, (state, action) => {
+        state.accounts = action.payload;
+        state.loading = false;
+      })
+      .addCase(getAll.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAll.rejected, (state) => {
+        state.loading = false;
+      })
       .addCase(removeAccount.fulfilled, (state, _) => {
         state.loading = false;
       })
-      .addDefaultCase((state) => {
+      .addCase(removeAccount.pending, (state, _) => {
         state.loading = true;
+      })
+      .addCase(removeAccount.rejected, (state, _) => {
+        state.loading = false;
+      })
+      .addDefaultCase((state) => {
+        state.loading = false;
       });
   },
 });

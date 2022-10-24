@@ -1,8 +1,10 @@
-import { Container, Table, Alert } from 'react-bootstrap';
+import { Container, Table, Alert, Button, Spinner } from 'react-bootstrap';
 import displayInYen from '../../core/displayInYen';
 import format from 'date-fns/format';
 import type { Account } from '../../core/redux/types';
 import { useAppSelector } from '../../core/redux/useAppSelector';
+import { useAppDispatch } from '../../core/redux/useAppDispatch';
+import { getAll } from '../../core/redux/accountSlice';
 
 const TODAY = new Date();
 
@@ -18,7 +20,8 @@ type AccountDisplay = {
 };
 
 const Home = () => {
-  const accounts = useAppSelector((x) => x.accounts.accounts);
+  const dispatch = useAppDispatch();
+  const { accounts, loading } = useAppSelector((x) => x.accounts);
 
   let totalBalance = 0;
   const totalBalancePerMonth: MonthlyBalance = {};
@@ -51,11 +54,26 @@ const Home = () => {
     };
   });
 
+  const onRefreshClick = async () => {
+    await dispatch(getAll());
+  };
+
   return (
     <Container style={{ marginTop: 10 }}>
       <Alert color={totalBalance > 0 ? 'success' : 'danger'}>
         Total Current Balance: {displayInYen(totalBalance)}
       </Alert>
+
+      <div style={{ display: 'block' }}>
+        <Button
+          variant="success"
+          style={{ marginBottom: 15 }}
+          onClick={onRefreshClick}
+          disabled={loading}
+        >
+          {loading ? <Spinner animation="border" size="sm" /> : 'Refresh'}
+        </Button>
+      </div>
 
       <h2>Balances</h2>
       <Table bordered>
