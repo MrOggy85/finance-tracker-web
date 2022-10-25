@@ -46,6 +46,9 @@ const INCOME_TAX = ['所得税'];
 const RESIDENT_TAX = ['住民税'];
 const TAXABLE_INCOME = ['課税対象額'];
 
+const STOCK_PROGRAM = ['持株会積立'];
+const STOCK_PROGRAM_SUBSIDY = ['持株奨励金'];
+
 const Salary = () => {
   const dispatch = useAppDispatch();
 
@@ -65,16 +68,15 @@ const Salary = () => {
   const [incomeTax, setIncomeTax] = useState('');
   const [residentTax, setResidentTax] = useState('');
 
-  // const sumMonthlySalary =
-  //   Number(baseSalary) + Number(deemedLabor) + Number(lifePlan);
+  const [stockOwnership, setStockOwnership] = useState('');
+  const [stockOwnershipSubsidy, setStockOwnershipSubsidy] = useState('');
+
   const sumMonthlySalary = getSumMonthlySalary(
     Number(baseSalary),
     Number(deemedLabor),
     Number(lifePlan)
   );
 
-  // const sumSocialInsurance =
-  //   Number(healthInsurance) + Number(pension) + Number(unemployment);
   const sumSocialInsurance = getSumSocialInsurance(
     Number(healthInsurance),
     Number(pension),
@@ -83,37 +85,29 @@ const Salary = () => {
 
   const sumAllowance = Number(commuterAllowance) + Number(remoteWorkerPay);
 
-  // const employmentIncomeDeduction = sumMonthlySalary * 0.1;
   const taxableIncome =
     Number(baseSalary) +
     Number(deemedLabor) +
     Number(insufficientDeemedLabor) -
     sumSocialInsurance +
     Number(lifePlanSubsidy) +
-    sumAllowance;
+    sumAllowance +
+    Number(stockOwnershipSubsidy);
 
-  // const totalDeductable =
-  //   sumSocialInsurance +
-  //   Number(incomeTax) +
-  //   Number(residentTax) +
-  //   Number(lifePlan);
   const totalDeductable = getTotalDeductable(
     sumSocialInsurance,
     Number(incomeTax),
     Number(residentTax),
-    Number(lifePlan)
+    Number(lifePlan),
+    Number(stockOwnership)
   );
 
-  // const grossSalary =
-  // sumMonthlySalary +
-  // Number(insufficientDeemedLabor) +
-  // Number(lifePlanSubsidy) +
-  // sumAllowance;
   const grossSalary = getGrossSalary(
     sumMonthlySalary,
     Number(insufficientDeemedLabor),
     Number(lifePlanSubsidy),
-    sumAllowance
+    sumAllowance,
+    Number(stockOwnershipSubsidy)
   );
 
   const netSalary = getNetSalary(grossSalary, totalDeductable);
@@ -134,6 +128,8 @@ const Salary = () => {
         unemployment: Number(unemployment),
         incomeTax: Number(incomeTax),
         residentTax: Number(residentTax),
+        stockOwnership: Number(stockOwnership),
+        stockOwnershipSubsidy: Number(stockOwnershipSubsidy),
       })
     );
   };
@@ -250,6 +246,24 @@ const Salary = () => {
           </p>
           <p>({'Health Insurance + Pension + Unemployment Insurance'})</p>
         </Alert>
+      </Container>
+
+      <Container style={{ background: '#63a4e62b', paddingBottom: 5 }}>
+        <h2>Employee Stock Program</h2>
+        <Input
+          label="Stock Ownership"
+          subLabel={STOCK_PROGRAM}
+          value={stockOwnership}
+          setValue={setStockOwnership}
+          type="number"
+        />
+        <Input
+          label="Stock Ownership Subsidy"
+          subLabel={STOCK_PROGRAM_SUBSIDY}
+          value={stockOwnershipSubsidy}
+          setValue={setStockOwnershipSubsidy}
+          type="number"
+        />
       </Container>
 
       <Container style={{ background: '#e663a92b', paddingBottom: 5 }}>

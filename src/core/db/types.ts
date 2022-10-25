@@ -26,4 +26,6 @@ export type Salary = {
   unemployment: number;
   incomeTax: number;
   residentTax: number;
+  stockOwnership: number;
+  stockOwnershipSubsidy: number;
 };

@@ -6,10 +6,11 @@ export function getGrossSalary(
   sumMonthlySalary: number,
   insufficientDeemedLabor: number,
   lifePlanSubsidy: number,
-  sumAllowance: number
+  sumAllowance: number,
+  stockOwnershipSubsidy: number,
 ) {
   return (
-    sumMonthlySalary + insufficientDeemedLabor + lifePlanSubsidy + sumAllowance
+    sumMonthlySalary + insufficientDeemedLabor + lifePlanSubsidy + sumAllowance + stockOwnershipSubsidy
   );
 }
 
@@ -17,9 +18,10 @@ export function getTotalDeductable(
   sumSocialInsurance: number,
   incomeTax: number,
   residentTax: number,
-  lifePlan: number
+  lifePlan: number,
+  stockOwnership: number,
 ) {
-  return sumSocialInsurance + incomeTax + residentTax + lifePlan;
+  return sumSocialInsurance + incomeTax + residentTax + lifePlan + stockOwnership;
 }
 
 export function getSumMonthlySalary(

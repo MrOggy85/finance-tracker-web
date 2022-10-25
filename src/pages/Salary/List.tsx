@@ -59,7 +59,8 @@ const SalaryList = () => {
               sumMonthlySalary,
               x.insufficientDeemedLabor,
               x.lifePlanSubsidy,
-              x.commuterAllowance + x.remoteWorkerPay
+              x.commuterAllowance + x.remoteWorkerPay,
+              x.stockOwnershipSubsidy
             );
             const sumSocialInsurance = getSumSocialInsurance(
               x.healthInsurance,
@@ -70,7 +71,8 @@ const SalaryList = () => {
               sumSocialInsurance,
               x.incomeTax,
               x.residentTax,
-              x.lifePlan
+              x.lifePlan,
+              x.stockOwnership
             );
 
             const netSalary = getNetSalary(grossSalary, totalDeductable);
