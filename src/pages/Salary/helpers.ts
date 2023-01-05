@@ -7,10 +7,14 @@ export function getGrossSalary(
   insufficientDeemedLabor: number,
   lifePlanSubsidy: number,
   sumAllowance: number,
-  stockOwnershipSubsidy: number,
+  stockOwnershipSubsidy: number
 ) {
   return (
-    sumMonthlySalary + insufficientDeemedLabor + lifePlanSubsidy + sumAllowance + stockOwnershipSubsidy
+    sumMonthlySalary +
+    insufficientDeemedLabor +
+    lifePlanSubsidy +
+    sumAllowance +
+    stockOwnershipSubsidy
   );
 }
 
@@ -23,9 +27,16 @@ export function getTotalDeductable(
   /**
    * 過不足税額
    */
-  taxExcess: number,
+  taxExcess: number
 ) {
-  return sumSocialInsurance + incomeTax + residentTax + lifePlan + stockOwnership - taxExcess;
+  return (
+    sumSocialInsurance +
+    incomeTax +
+    residentTax +
+    lifePlan +
+    stockOwnership -
+    taxExcess
+  );
 }
 
 export function getSumMonthlySalary(

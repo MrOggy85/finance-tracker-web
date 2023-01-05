@@ -24,7 +24,9 @@ import type { Salary } from './types';
  */
 
 export async function getAll() {
-  const salaryEntities = await dbRequest('SELECT id,date,base_salary,deemed_labor,insufficient_deemed_labor,life_plan,life_plan_subsidy,commuter_allowance,remote_worker_pay,health_insurance,pension,unemployment,income_tax,resident_tax,stock_ownership,stock_ownership_subsidy,tax_excess FROM salary');
+  const salaryEntities = await dbRequest(
+    'SELECT id,date,base_salary,deemed_labor,insufficient_deemed_labor,life_plan,life_plan_subsidy,commuter_allowance,remote_worker_pay,health_insurance,pension,unemployment,income_tax,resident_tax,stock_ownership,stock_ownership_subsidy,tax_excess FROM salary'
+  );
 
   const salaries: Salary[] = salaryEntities.rows.map((x) => {
     const id = Number(x[0]) || -1;
