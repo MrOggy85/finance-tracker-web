@@ -28,4 +28,5 @@ export type Salary = {
   residentTax: number;
   stockOwnership: number;
   stockOwnershipSubsidy: number;
+  taxExcess: number;
 };

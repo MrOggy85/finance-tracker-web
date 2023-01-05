@@ -72,7 +72,8 @@ const SalaryList = () => {
               x.incomeTax,
               x.residentTax,
               x.lifePlan,
-              x.stockOwnership
+              x.stockOwnership,
+              x.taxExcess
             );
 
             const netSalary = getNetSalary(grossSalary, totalDeductable);

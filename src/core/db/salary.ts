@@ -20,10 +20,11 @@ import type { Salary } from './types';
  * resident_tax integer NOT NULL
  * stock_ownership integer NOT NULL DEFAULT 0
  * stock_ownership_subsidy integer NOT NULL DEFAULT 0
+ * tax_excess integer NOT NULL DEFAULT 0
  */
 
 export async function getAll() {
-  const salaryEntities = await dbRequest('SELECT id,date,base_salary,deemed_labor,insufficient_deemed_labor,life_plan,life_plan_subsidy,commuter_allowance,remote_worker_pay,health_insurance,pension,unemployment,income_tax,resident_tax,stock_ownership,stock_ownership_subsidy FROM salary');
+  const salaryEntities = await dbRequest('SELECT id,date,base_salary,deemed_labor,insufficient_deemed_labor,life_plan,life_plan_subsidy,commuter_allowance,remote_worker_pay,health_insurance,pension,unemployment,income_tax,resident_tax,stock_ownership,stock_ownership_subsidy,tax_excess FROM salary');
 
   const salaries: Salary[] = salaryEntities.rows.map((x) => {
     const id = Number(x[0]) || -1;
@@ -42,6 +43,7 @@ export async function getAll() {
     const residentTax = Number(x[13]) || -1;
     const stockOwnership = Number(x[14]) || -1;
     const stockOwnershipSubsidy = Number(x[15]) || -1;
+    const taxExcess = Number(x[16]) || -1;
 
     return {
       id,
@@ -60,6 +62,7 @@ export async function getAll() {
       residentTax,
       stockOwnership,
       stockOwnershipSubsidy,
+      taxExcess,
     };
   });
 
@@ -86,13 +89,14 @@ export async function add({
   residentTax,
   stockOwnership,
   stockOwnershipSubsidy,
+  taxExcess,
 }: Add) {
   const sql =
     'INSERT INTO salary (' +
     '"date", "base_salary", "deemed_labor" ,"insufficient_deemed_labor", ' +
     '"life_plan", "life_plan_subsidy", "commuter_allowance", "remote_worker_pay", ' +
     '"health_insurance", "pension", "unemployment", "income_tax", "resident_tax", ' +
-    '"stock_ownership", "stock_ownership_subsidy") ' +
+    '"stock_ownership", "stock_ownership_subsidy", "tax_excess") ' +
     'VALUES(' +
     `'${format(date, 'yyyy-MM-dd HH:MM')}',` +
     `${baseSalary},` +
@@ -108,7 +112,8 @@ export async function add({
     `${incomeTax},` +
     `${residentTax},` +
     `${stockOwnership},` +
-    `${stockOwnershipSubsidy}` +
+    `${stockOwnershipSubsidy},` +
+    `${taxExcess}` +
     ')';
 
   await dbRequest(sql);

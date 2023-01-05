@@ -45,6 +45,7 @@ const SUM_SOCIAL_INSURANCE = ['社保合計額'];
 const INCOME_TAX = ['所得税'];
 const RESIDENT_TAX = ['住民税'];
 const TAXABLE_INCOME = ['課税対象額'];
+const TAX_EXCESS = ['過不足税額', 'Usually end-of-year'];
 
 const STOCK_PROGRAM = ['持株会積立'];
 const STOCK_PROGRAM_SUBSIDY = ['持株奨励金'];
@@ -70,6 +71,7 @@ const Salary = () => {
 
   const [stockOwnership, setStockOwnership] = useState('');
   const [stockOwnershipSubsidy, setStockOwnershipSubsidy] = useState('');
+  const [taxExcess, setTaxExcess] = useState('');
 
   const sumMonthlySalary = getSumMonthlySalary(
     Number(baseSalary),
@@ -99,7 +101,8 @@ const Salary = () => {
     Number(incomeTax),
     Number(residentTax),
     Number(lifePlan),
-    Number(stockOwnership)
+    Number(stockOwnership),
+    Number(taxExcess)
   );
 
   const grossSalary = getGrossSalary(
@@ -130,6 +133,7 @@ const Salary = () => {
         residentTax: Number(residentTax),
         stockOwnership: Number(stockOwnership),
         stockOwnershipSubsidy: Number(stockOwnershipSubsidy),
+        taxExcess: Number(taxExcess),
       })
     );
   };
@@ -292,6 +296,13 @@ const Salary = () => {
           subLabel={RESIDENT_TAX}
           value={residentTax}
           setValue={setResidentTax}
+          type="number"
+        />
+        <Input
+          label="Tax Excess"
+          subLabel={TAX_EXCESS}
+          value={taxExcess}
+          setValue={setTaxExcess}
           type="number"
         />
       </Container>

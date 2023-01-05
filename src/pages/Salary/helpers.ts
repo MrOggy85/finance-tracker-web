@@ -20,8 +20,12 @@ export function getTotalDeductable(
   residentTax: number,
   lifePlan: number,
   stockOwnership: number,
+  /**
+   * 過不足税額
+   */
+  taxExcess: number,
 ) {
-  return sumSocialInsurance + incomeTax + residentTax + lifePlan + stockOwnership;
+  return sumSocialInsurance + incomeTax + residentTax + lifePlan + stockOwnership - taxExcess;
 }
 
 export function getSumMonthlySalary(
