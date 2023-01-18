@@ -1,6 +1,7 @@
-import { Container, Table, Button, Spinner } from 'react-bootstrap';
+import { Container, Table, Spinner } from 'react-bootstrap';
 import { FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import Button from '../../components/Button';
 import displayInYen from '../../core/displayInYen';
 import { getAll } from '../../core/redux/salarySlice';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
@@ -30,12 +31,13 @@ const SalaryList = () => {
           style={{ marginBottom: 15 }}
           onClick={onRefreshClick}
           disabled={loading}
-        >
-          {loading ? <Spinner animation="border" size="sm" /> : 'Refresh'}
-        </Button>
+          content={
+            loading ? <Spinner animation="border" size="sm" /> : 'Refresh'
+          }
+        />
       </div>
       <Link to="/salary/add">
-        <Button style={{ marginBottom: 15 }}>Add</Button>
+        <Button variant="primary" style={{ marginBottom: 15 }} content="ADD" />
       </Link>
       <Table bordered>
         <thead>
@@ -86,15 +88,16 @@ const SalaryList = () => {
                     // onClick={() => {
                     //   remove(x.id);
                     // }}
-                  >
-                    {loading ? (
-                      <Spinner animation="border" size="sm">
-                        {' '}
-                      </Spinner>
-                    ) : (
-                      <FiTrash2 />
-                    )}
-                  </Button>
+                    content={
+                      loading ? (
+                        <Spinner animation="border" size="sm">
+                          {' '}
+                        </Spinner>
+                      ) : (
+                        <FiTrash2 />
+                      )
+                    }
+                  />
                 </td>
                 <td>{x.id}</td>
                 <td>{x.date}</td>

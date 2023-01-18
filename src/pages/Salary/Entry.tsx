@@ -148,7 +148,7 @@ const Salary = () => {
         label="Payment Date"
         type="date"
         value={format(date, 'yyyy-MM-dd')}
-        setValue={(value) => {
+        onChange={(value) => {
           setDate(new Date(value));
         }}
       />
@@ -159,35 +159,35 @@ const Salary = () => {
           label="Base Salary"
           subLabel={BASE_SALARY}
           value={baseSalary}
-          setValue={setBaseSalary}
+          onChange={setBaseSalary}
           type="number"
         />
         <Input
           label="Deemed Labor"
           subLabel={DEEMED_LABOR}
           value={deemedLabor}
-          setValue={setDeemedLabor}
+          onChange={setDeemedLabor}
           type="number"
         />
         <Input
           label="Insufficient Deemed Labor"
           subLabel={INSUFFICIENT_DEEMED_LABOR}
           value={insufficientDeemedLabor}
-          setValue={setInsufficientDeemedLabor}
+          onChange={setInsufficientDeemedLabor}
           type="number"
         />
         <Input
           label="Life plan allowance"
           subLabel={LIFE_PLAN_ALLOWANCE}
           value={lifePlan}
-          setValue={setLifePlan}
+          onChange={setLifePlan}
           type="number"
         />
         <Input
           label="Life plan Subsidy"
           subLabel={LIFE_PLAN_SUBSIDY}
           value={lifePlanSubsidy}
-          setValue={setLifePlanSubsidy}
+          onChange={setLifePlanSubsidy}
           type="number"
         />
 
@@ -203,14 +203,14 @@ const Salary = () => {
         label="Commuter allowance"
         subLabel={COMMUTER_ALLOWENCE}
         value={commuterAllowance}
-        setValue={setCommuterAllowance}
+        onChange={setCommuterAllowance}
         type="number"
       />
       <Input
         label="Remote Worker Pay"
         subLabel={REMOTE_WORKER_PAY}
         value={remoteWorkerPay}
-        setValue={setRemoteWorkerPay}
+        onChange={setRemoteWorkerPay}
         type="number"
       />
       <Alert>
@@ -226,21 +226,21 @@ const Salary = () => {
           label="Health Insurance"
           subLabel={HEALTH_INSURANCE}
           value={healthInsurance}
-          setValue={setHealthInsurance}
+          onChange={setHealthInsurance}
           type="number"
         />
         <Input
           label="Pension"
           subLabel={PENSION}
           value={pension}
-          setValue={setPension}
+          onChange={setPension}
           type="number"
         />
         <Input
           label="Unemployment Insurance"
           subLabel={UNEMPLOYMENT}
           value={unemployment}
-          setValue={setUnemployment}
+          onChange={setUnemployment}
           type="number"
         />
         <Alert variant="warning">
@@ -258,14 +258,14 @@ const Salary = () => {
           label="Stock Ownership"
           subLabel={STOCK_PROGRAM}
           value={stockOwnership}
-          setValue={setStockOwnership}
+          onChange={setStockOwnership}
           type="number"
         />
         <Input
           label="Stock Ownership Subsidy"
           subLabel={STOCK_PROGRAM_SUBSIDY}
           value={stockOwnershipSubsidy}
-          setValue={setStockOwnershipSubsidy}
+          onChange={setStockOwnershipSubsidy}
           type="number"
         />
       </Container>
@@ -282,7 +282,7 @@ const Salary = () => {
           label="Income Tax"
           subLabel={INCOME_TAX}
           value={incomeTax}
-          setValue={setIncomeTax}
+          onChange={setIncomeTax}
           type="number"
         />
         <Alert variant="danger">
@@ -295,14 +295,14 @@ const Salary = () => {
           label="Resident Tax"
           subLabel={RESIDENT_TAX}
           value={residentTax}
-          setValue={setResidentTax}
+          onChange={setResidentTax}
           type="number"
         />
         <Input
           label="Tax Excess"
           subLabel={TAX_EXCESS}
           value={taxExcess}
-          setValue={setTaxExcess}
+          onChange={setTaxExcess}
           type="number"
         />
       </Container>

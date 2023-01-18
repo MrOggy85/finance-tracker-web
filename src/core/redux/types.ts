@@ -13,3 +13,12 @@ export type Account = {
   currentBalance: number;
   balances: Balance[];
 };
+
+export type Furusato = {
+  id: number;
+  amount: number;
+  boughtAt: string;
+  createdAt: string;
+  prefecture: string;
+  productName: string;
+};

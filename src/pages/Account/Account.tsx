@@ -121,7 +121,7 @@ const AccountComp = () => {
                   type="date"
                   value={format(newBalanceDate, 'yyyy-MM-dd')}
                   disabled={loading}
-                  setValue={(value) => {
+                  onChange={(value) => {
                     if (!value) {
                       return;
                     }
@@ -137,7 +137,7 @@ const AccountComp = () => {
                     newBalanceAmount === 0 ? '' : newBalanceAmount.toString()
                   }
                   disabled={loading}
-                  setValue={(v) => {
+                  onChange={(v) => {
                     setNewBalanceAmount(Number(v));
                   }}
                   onKeyDown={(event) => {
@@ -272,7 +272,7 @@ const AccountComp = () => {
                     label=""
                     value={editAccountTitle}
                     disabled={loading}
-                    setValue={(value) => {
+                    onChange={(value) => {
                       setEditAccountTitle(value);
                     }}
                   />
@@ -309,7 +309,7 @@ const AccountComp = () => {
                 label=""
                 value={newAccountTitle}
                 disabled={loading}
-                setValue={(value) => {
+                onChange={(value) => {
                   setNewAccountTitle(value);
                 }}
               />

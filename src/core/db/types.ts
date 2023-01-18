@@ -30,3 +30,12 @@ export type Salary = {
   stockOwnershipSubsidy: number;
   taxExcess: number;
 };
+
+export type Furusato = {
+  id: number;
+  amount: number;
+  boughtAt: Date;
+  createdAt: Date;
+  prefecture: string;
+  productName: string;
+};

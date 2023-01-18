@@ -9,6 +9,8 @@ import Account from './pages/Account';
 import Login from './pages/Login';
 import SalaryList from './pages/Salary/List';
 import SalaryEntry from './pages/Salary/Entry';
+import FurusatoList from './pages/Tax/FurusatoList';
+import FurusatoDetails from './pages/Tax/FurusatoDetails';
 
 type LinkItemProps = {
   url: string;
@@ -58,10 +60,13 @@ function App() {
             <LinkItem url="/salary" text="Salary" />
           </NavItem>
         )}
-
         <NavItem>
-          <LinkItem url="/daily-check-in" text="Check-In" />
+          <LinkItem url="/furusato" text="Furusato" />
         </NavItem>
+
+        {/* <NavItem>
+          <LinkItem url="/daily-check-in" text="Check-In" />
+        </NavItem> */}
       </Nav>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -69,6 +74,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/salary" element={<SalaryList />} />
         <Route path="/salary/add" element={<SalaryEntry />} />
+        <Route path="/furusato" element={<FurusatoList />} />
+        <Route path="/furusato/:id" element={<FurusatoDetails />} />
       </Routes>
       <Future visible={location.pathname === '/future'} />
       <DailyCheckIn visible={location.pathname === '/daily-check-in'} />
