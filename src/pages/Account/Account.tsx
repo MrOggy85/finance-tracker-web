@@ -1,8 +1,8 @@
-import { Button, Container, Spinner, Table } from 'react-bootstrap';
+import { Container, Spinner, Table } from 'react-bootstrap';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { useState } from 'react';
-import { FiTrash2, FiEdit, FiCheck, FiX } from 'react-icons/fi';
+import { FiTrash2, FiEdit, FiCheck, FiX, FiPlusCircle } from 'react-icons/fi';
 import type { Account } from '../../core/redux/types';
 import {
   removeAccount as removeAccountAction,
@@ -16,6 +16,7 @@ import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import Select from '../../components/Select';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const AccountComp = () => {
   const dispatch = useAppDispatch();
@@ -97,22 +98,16 @@ const AccountComp = () => {
             <tr>
               <td>
                 <Button
-                  color="primary"
+                  variant="primary"
                   type="button"
                   style={{ marginRight: 5 }}
                   disabled={loading || newBalanceAmount === 0}
                   onClick={() => {
                     addBalance(account.id);
                   }}
-                >
-                  {loading ? (
-                    <Spinner animation="border" size="sm">
-                      {' '}
-                    </Spinner>
-                  ) : (
-                    'ADD'
-                  )}
-                </Button>
+                  loading={loading}
+                  content={<FiPlusCircle />}
+                />
               </td>
               <td />
               <td>
@@ -159,15 +154,9 @@ const AccountComp = () => {
                   onClick={() => {
                     removeBalance(x.id);
                   }}
-                >
-                  {loading ? (
-                    <Spinner animation="border" size="sm">
-                      {' '}
-                    </Spinner>
-                  ) : (
-                    <FiTrash2 />
-                  )}
-                </Button>
+                  loading={loading}
+                  content={<FiTrash2 />}
+                />
               </td>
 
               <td>{x.id}</td>
@@ -201,15 +190,10 @@ const AccountComp = () => {
                       editAccountFinish();
                     }}
                     style={{ marginRight: 5 }}
-                  >
-                    {loading ? (
-                      <Spinner animation="border" size="sm">
-                        {' '}
-                      </Spinner>
-                    ) : (
-                      <FiCheck />
-                    )}
-                  </Button>
+                    loading={loading}
+                    content={<FiCheck />}
+                  />
+
                   <Button
                     variant="danger"
                     type="button"
@@ -217,15 +201,9 @@ const AccountComp = () => {
                     onClick={() => {
                       editAccountCancel();
                     }}
-                  >
-                    {loading ? (
-                      <Spinner animation="border" size="sm">
-                        {' '}
-                      </Spinner>
-                    ) : (
-                      <FiX />
-                    )}
-                  </Button>
+                    loading={loading}
+                    content={<FiX />}
+                  />
                 </td>
               ) : (
                 <td>
@@ -237,15 +215,10 @@ const AccountComp = () => {
                       editAccountStart(x.id, x.name);
                     }}
                     style={{ marginRight: 5 }}
-                  >
-                    {loading ? (
-                      <Spinner animation="border" size="sm">
-                        {' '}
-                      </Spinner>
-                    ) : (
-                      <FiEdit />
-                    )}
-                  </Button>
+                    loading={loading}
+                    content={<FiEdit />}
+                  />
+
                   <Button
                     variant="danger"
                     type="button"
@@ -253,15 +226,9 @@ const AccountComp = () => {
                     onClick={() => {
                       removeAccount(x.id);
                     }}
-                  >
-                    {loading ? (
-                      <Spinner animation="border" size="sm">
-                        {' '}
-                      </Spinner>
-                    ) : (
-                      <FiTrash2 />
-                    )}
-                  </Button>
+                    loading={loading}
+                    content={<FiTrash2 />}
+                  />
                 </td>
               )}
 
@@ -293,15 +260,9 @@ const AccountComp = () => {
                 onClick={() => {
                   addAccount(newAccountTitle);
                 }}
-              >
-                {loading ? (
-                  <Spinner animation="border" size="sm">
-                    {' '}
-                  </Spinner>
-                ) : (
-                  'ADD'
-                )}
-              </Button>
+                loading={loading}
+                content="ADD"
+              />
             </td>
             <td />
             <td>

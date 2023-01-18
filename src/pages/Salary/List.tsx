@@ -1,5 +1,5 @@
-import { Container, Table, Spinner } from 'react-bootstrap';
-import { FiTrash2 } from 'react-icons/fi';
+import { Container, Table } from 'react-bootstrap';
+import { FiPlusCircle, FiRepeat, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import displayInYen from '../../core/displayInYen';
@@ -24,24 +24,27 @@ const SalaryList = () => {
 
   return (
     <Container style={{ marginTop: 10, marginBottom: 30 }}>
-      <h1>Salary List</h1>
       <div style={{ display: 'block' }}>
         <Button
           variant="success"
-          style={{ marginBottom: 15 }}
+          style={{ marginBottom: 15, marginRight: 5 }}
           onClick={onRefreshClick}
           disabled={loading}
-          content={
-            loading ? <Spinner animation="border" size="sm" /> : 'Refresh'
-          }
+          loading={loading}
+          content={<FiRepeat />}
         />
+        <Link to="/salary/add">
+          <Button
+            variant="primary"
+            style={{ marginBottom: 15 }}
+            content={<FiPlusCircle />}
+          />
+        </Link>
       </div>
-      <Link to="/salary/add">
-        <Button variant="primary" style={{ marginBottom: 15 }} content="ADD" />
-      </Link>
+
       <Table bordered>
         <thead>
-          <tr>
+          <tr style={{ background: 'lightyellow' }}>
             <th style={{ width: '5%' }}></th>
             <th style={{ width: '5%' }}>#</th>
             <th style={{ width: 5 }}>Date</th>
@@ -88,15 +91,8 @@ const SalaryList = () => {
                     // onClick={() => {
                     //   remove(x.id);
                     // }}
-                    content={
-                      loading ? (
-                        <Spinner animation="border" size="sm">
-                          {' '}
-                        </Spinner>
-                      ) : (
-                        <FiTrash2 />
-                      )
-                    }
+                    loading={loading}
+                    content={<FiTrash2 />}
                   />
                 </td>
                 <td>{x.id}</td>

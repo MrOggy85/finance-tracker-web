@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Button as BootstrapButton } from 'react-bootstrap';
+import { Button as BootstrapButton, Spinner } from 'react-bootstrap';
 import styles from './button.module.css';
 
 type Props = {
@@ -25,6 +25,7 @@ type Props = {
   style?: React.CSSProperties | undefined;
   className?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
 };
 
@@ -33,6 +34,7 @@ const Button = ({
   variant,
   onClick,
   disabled,
+  loading,
   style,
   className,
   type,
@@ -47,7 +49,15 @@ const Button = ({
       onClick={onClick}
       size="sm"
     >
-      {content}
+      {loading ? (
+        <Spinner
+          animation="border"
+          size="sm"
+          style={{ verticalAlign: 'middle' }}
+        />
+      ) : (
+        content
+      )}
     </BootstrapButton>
   );
 };
