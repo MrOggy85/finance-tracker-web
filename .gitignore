@@ -4,9 +4,6 @@ build
 # build dependencies
 node_modules
 
-# DB
-test
-
 # Logs
 yarn-error.log
 
@@ -15,3 +12,6 @@ yarn-error.log
 
 # MacOS
 .DS_Store
+
+# local scripts
+/local-*
