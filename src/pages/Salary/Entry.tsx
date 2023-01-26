@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import { useState } from 'react';
 import { Container, Button, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import displayInYen from '../../core/displayInYen';
 import { add } from '../../core/redux/salarySlice';
@@ -52,6 +52,7 @@ const STOCK_PROGRAM_SUBSIDY = ['持株奨励金'];
 
 const Salary = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [date, setDate] = useState(new Date());
   const [baseSalary, setBaseSalary] = useState('');
@@ -115,8 +116,8 @@ const Salary = () => {
 
   const netSalary = getNetSalary(grossSalary, totalDeductable);
 
-  const onClick = () => {
-    dispatch(
+  const onClick = async () => {
+    const action = await dispatch(
       add({
         date,
         baseSalary: Number(baseSalary),
@@ -136,6 +137,12 @@ const Salary = () => {
         taxExcess: Number(taxExcess),
       })
     );
+
+    if (action.type === add.fulfilled.type) {
+      navigate('/salary');
+    } else {
+      alert('Something went wrong');
+    }
   };
 
   return (
@@ -170,7 +177,7 @@ const Salary = () => {
           type="number"
         />
         <Input
-          label="Insufficient Deemed Labor"
+          label="Insufficient Deemed Labor (if negative, input negative number)"
           subLabel={INSUFFICIENT_DEEMED_LABOR}
           value={insufficientDeemedLabor}
           onChange={setInsufficientDeemedLabor}

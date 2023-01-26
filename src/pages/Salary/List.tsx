@@ -3,7 +3,7 @@ import { FiPlusCircle, FiRepeat, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import displayInYen from '../../core/displayInYen';
-import { getAll } from '../../core/redux/salarySlice';
+import { getAll, remove } from '../../core/redux/salarySlice';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import {
@@ -20,6 +20,15 @@ const SalaryList = () => {
 
   const onRefreshClick = async () => {
     await dispatch(getAll());
+  };
+
+  const onTrashConfirmClick = async (id: number) => {
+    const action = await dispatch(remove(id));
+    if (action.type === remove.fulfilled.type) {
+      // navigate('/salary');
+    } else {
+      alert('Something went wrong');
+    }
   };
 
   return (
@@ -88,9 +97,13 @@ const SalaryList = () => {
                   <Button
                     variant="danger"
                     disabled={loading}
-                    // onClick={() => {
-                    //   remove(x.id);
-                    // }}
+                    onClick={() => {
+                      const yes = confirm(`remove ${x.id}, ${x.date}`);
+                      console.log('yes', yes);
+                      if (yes) {
+                        onTrashConfirmClick(x.id);
+                      }
+                    }}
                     loading={loading}
                     content={<FiTrash2 />}
                   />

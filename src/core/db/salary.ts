@@ -120,3 +120,8 @@ export async function add({
 
   await dbRequest(sql);
 }
+
+export async function remove(id: number) {
+  const sql = 'DELETE FROM salary ' + `WHERE id = ${id};`;
+  await dbRequest(sql);
+}

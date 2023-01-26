@@ -44,7 +44,6 @@ export async function add(amount: number, accountId: number, date: Date) {
 }
 
 export async function remove(id: number) {
-  console.log('rm balance', id);
   const sql = 'DELETE FROM balance ' + `WHERE id = ${id};`;
 
   await dbRequest(sql);

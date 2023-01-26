@@ -23,6 +23,14 @@ export const add = createAsyncThunk<void, Add, EmptyObject>(
   }
 );
 
+export const remove = createAsyncThunk<void, number, EmptyObject>(
+  `${NAMESPACE}/remove`,
+  async (id, thunkApi) => {
+    await salary.remove(id);
+    thunkApi.dispatch(getAll());
+  }
+);
+
 const salarySlice = createSlice({
   name: NAMESPACE,
   initialState: {
@@ -49,6 +57,16 @@ const salarySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAll.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(remove.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(remove.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(remove.rejected, (state) => {
       state.loading = false;
     });
   },
