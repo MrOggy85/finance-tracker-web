@@ -54,12 +54,14 @@ export async function add(name: string): Promise<void> {
   await dbRequest(sql);
 }
 
-export function remove(_id: number) {
-  // TODO
-  return {} as Promise<void>;
+export async function remove(id: number) {
+  const sql = `DELETE FROM public.account WHERE id = ${id};`;
+  await dbRequest(sql);
 }
 
-export function updateName(_id: number, _name: string) {
-  // TODO
-  return {} as Promise<void>;
+export async function updateName(id: number, name: string) {
+  const sql =
+    'UPDATE public.account ' + `SET "name" = '${name}' ` + `WHERE id = ${id};`;
+
+  await dbRequest(sql);
 }

@@ -44,8 +44,11 @@ const AccountComp = () => {
     dispatch(removeBalanceAction(id));
   };
 
-  const removeAccount = (id: number) => {
-    dispatch(removeAccountAction(id));
+  const removeAccount = (id: number, name: string) => {
+    const yes = confirm(`remove (${id})  ${name}`);
+    if (yes) {
+      dispatch(removeAccountAction(id));
+    }
   };
   const addAccount = (name: string) => {
     dispatch(addAccountAction(name));
@@ -242,7 +245,7 @@ const AccountComp = () => {
                     type="button"
                     disabled={loading}
                     onClick={() => {
-                      removeAccount(x.id);
+                      removeAccount(x.id, x.name);
                     }}
                     loading={loading}
                     content={<FiTrash2 />}
