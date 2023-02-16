@@ -11,6 +11,7 @@ import SalaryList from './pages/Salary/List';
 import SalaryEntry from './pages/Salary/Entry';
 import FurusatoList from './pages/Tax/FurusatoList';
 import FurusatoDetails from './pages/Tax/FurusatoDetails';
+import '@otaku/otaku-ui/lib/index.css';
 
 type LinkItemProps = {
   url: string;

@@ -1,8 +1,15 @@
-import { Container, Spinner, Table } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { useState } from 'react';
-import { FiTrash2, FiEdit, FiCheck, FiX, FiPlusCircle } from 'react-icons/fi';
+import {
+  FiTrash2,
+  FiEdit,
+  FiCheck,
+  FiX,
+  FiPlusCircle,
+  FiRepeat,
+} from 'react-icons/fi';
 import type { Account } from '../../core/redux/types';
 import {
   removeAccount as removeAccountAction,
@@ -14,9 +21,9 @@ import {
 import displayInYen from '../../core/displayInYen';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
-import Select from '../../components/Select';
+import { getAll as getAllAccounts } from '../../core/redux/accountSlice';
 import Input from '../../components/Input';
-import Button from '../../components/Button';
+import { Button, Select } from '@otaku/otaku-ui';
 
 const AccountComp = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +34,6 @@ const AccountComp = () => {
   >(null);
 
   const addBalance = (id: number) => {
-    console.log('addBalance...', id);
     dispatch(
       addBalanceAction({ amount: newBalanceAmount, id, date: newBalanceDate })
     );
@@ -69,11 +75,23 @@ const AccountComp = () => {
 
   const account = accounts.find((x) => x.id === choosenAccountId);
 
+  const onRefreshClick = async () => {
+    await dispatch(getAllAccounts());
+  };
+
   return (
     <Container style={{ marginTop: 10 }}>
+      <div style={{ display: 'block' }}>
+        <Button
+          variant="success"
+          style={{ marginBottom: 15 }}
+          onClick={onRefreshClick}
+          loading={loading}
+          content={<FiRepeat />}
+        />
+      </div>
       <div style={{ width: '300px' }}>
         <Select
-          label="Account"
           emptyOptionLabel="Select Account"
           options={accounts.map((x) => ({
             value: x.id.toString(),

@@ -6,6 +6,7 @@ import type { Account } from '../../core/redux/types';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { getAll } from '../../core/redux/accountSlice';
+import { FiRepeat } from 'react-icons/fi';
 
 const TODAY = new Date();
 
@@ -71,7 +72,7 @@ const Home = () => {
           style={{ marginBottom: 15 }}
           onClick={onRefreshClick}
           loading={loading}
-          content="Refresh"
+          content={<FiRepeat />}
         />
       </div>
 

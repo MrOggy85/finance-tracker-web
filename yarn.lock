@@ -1557,10 +1557,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@otaku/otaku-ui@^0.0.2":
-  version "0.0.2"
-  resolved "http://localhost:3000/api/packages/oskar/npm/%40otaku%2Fotaku-ui/-/0.0.2/otaku-ui-0.0.2.tgz#3bb728afcd7f375b3ae22396b08df07faecd3cf8"
-  integrity sha512-LiPtTG0pwsXPbnk3FaY5cxFDGCjjzvJDuKd8eCZbsMoJ+tExASahMInjz9SsI8bEsZFueb09uE2iUTgcXqesHQ==
+"@otaku/otaku-ui@^0.0.5":
+  version "0.0.5"
+  resolved "http://localhost:3000/api/packages/oskar/npm/%40otaku%2Fotaku-ui/-/0.0.5/otaku-ui-0.0.5.tgz#3264ce19b542fcf5e13e5a42edf9aca58ba38a48"
+  integrity sha512-Ye1AAJGtCuiHi4uxr8h7f/T+fftAX5ADoz/nR5usWTwkOYjQza1ue+IKWZpwcSGNYpmPDdbQyalSmprWyoUAtQ==
   dependencies:
     "@reduxjs/toolkit" "^1.9.1"
     axios "^1.2.2"
