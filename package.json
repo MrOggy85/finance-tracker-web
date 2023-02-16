@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "web client for Finance Tracking",
   "main": "index.js",
-  "author": "Oskar Okuno <2677573+MrOggy85@users.noreply.github.com> (https://www.okuno.se)",
+  "author": "Oskar Okuno <gitea@okuno.se> (https://www.okuno.se)",
   "license": "MIT",
   "private": true,
   "scripts": {
