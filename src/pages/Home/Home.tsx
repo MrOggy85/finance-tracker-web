@@ -1,6 +1,7 @@
-import { Container, Table, Alert, Button, Spinner } from 'react-bootstrap';
+import { Container, Table, Alert } from 'react-bootstrap';
 import displayInYen from '../../core/displayInYen';
 import format from 'date-fns/format';
+import { Button } from '@otaku/otaku-ui';
 import type { Account } from '../../core/redux/types';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
@@ -69,10 +70,9 @@ const Home = () => {
           variant="success"
           style={{ marginBottom: 15 }}
           onClick={onRefreshClick}
-          disabled={loading}
-        >
-          {loading ? <Spinner animation="border" size="sm" /> : 'Refresh'}
-        </Button>
+          loading={loading}
+          content="Refresh"
+        />
       </div>
 
       <h2>Balances</h2>
