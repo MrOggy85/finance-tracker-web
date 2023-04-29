@@ -10,6 +10,7 @@ import {
   FiPlusCircle,
   FiRepeat,
 } from 'react-icons/fi';
+import { Button, Select } from '@otaku/otaku-ui';
 import type { Account } from '../../core/redux/types';
 import {
   removeAccount as removeAccountAction,
@@ -17,13 +18,12 @@ import {
   addAccount as addAccountAction,
   addBalance as addBalanceAction,
   rename,
+  getAll as getAllAccounts,
 } from '../../core/redux/accountSlice';
 import displayInYen from '../../core/displayInYen';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
-import { getAll as getAllAccounts } from '../../core/redux/accountSlice';
 import Input from '../../components/Input';
-import { Button, Select } from '@otaku/otaku-ui';
 
 const AccountComp = () => {
   const dispatch = useAppDispatch();
