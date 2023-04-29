@@ -11,7 +11,7 @@ import {
   getNetSalary,
   getSumMonthlySalary,
   getSumSocialInsurance,
-  getTotalDeductable,
+  getTotalDeductibles,
 } from './helpers';
 
 const BASE_SALARY = ['基本給'];
@@ -20,7 +20,7 @@ const DEEMED_LABOR = [
   'Wages for imputed labor (equivalent to 45h)',
 ];
 const INSUFFICIENT_DEEMED_LABOR = ['不足控除'];
-const COMMUTER_ALLOWENCE = ['通勤手当, 在宅手当'];
+const COMMUTER_ALLOWANCE = ['通勤手当, 在宅手当'];
 const LIFE_PLAN_ALLOWANCE = [
   'LP(拠出金)',
   'ライフプラン手当',
@@ -97,7 +97,7 @@ const Salary = () => {
     sumAllowance +
     Number(stockOwnershipSubsidy);
 
-  const totalDeductable = getTotalDeductable(
+  const totalDeductible = getTotalDeductibles(
     sumSocialInsurance,
     Number(incomeTax),
     Number(residentTax),
@@ -114,7 +114,7 @@ const Salary = () => {
     Number(stockOwnershipSubsidy)
   );
 
-  const netSalary = getNetSalary(grossSalary, totalDeductable);
+  const netSalary = getNetSalary(grossSalary, totalDeductible);
 
   const onClick = async () => {
     const action = await dispatch(
@@ -208,7 +208,7 @@ const Salary = () => {
       </Container>
       <Input
         label="Commuter allowance"
-        subLabel={COMMUTER_ALLOWENCE}
+        subLabel={COMMUTER_ALLOWANCE}
         value={commuterAllowance}
         onChange={setCommuterAllowance}
         type="number"
@@ -321,8 +321,8 @@ const Salary = () => {
             {displayInYen(grossSalary)}
           </p>
           <p>
-            Total Deductable (総控除額):
-            {displayInYen(totalDeductable)}
+            Total Deductible (総控除額):
+            {displayInYen(totalDeductible)}
           </p>
           <p>
             Net Salary (差引支給額):

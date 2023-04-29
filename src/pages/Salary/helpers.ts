@@ -1,5 +1,5 @@
-export function getNetSalary(grossSalary: number, totalDeductable: number) {
-  return grossSalary - totalDeductable;
+export function getNetSalary(grossSalary: number, totalDeductible: number) {
+  return grossSalary - totalDeductible;
 }
 
 export function getGrossSalary(
@@ -18,7 +18,7 @@ export function getGrossSalary(
   );
 }
 
-export function getTotalDeductable(
+export function getTotalDeductibles(
   sumSocialInsurance: number,
   incomeTax: number,
   residentTax: number,
