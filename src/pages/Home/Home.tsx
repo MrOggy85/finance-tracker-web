@@ -1,12 +1,15 @@
-import { Container, Table, Alert } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 import displayInYen from '../../core/displayInYen';
 import format from 'date-fns/format';
-import { Button } from '@otaku/otaku-ui';
+import { Button, Table } from '@otaku/otaku-ui';
 import type { Account } from '../../core/redux/types';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { getAll } from '../../core/redux/accountSlice';
 import { FiRepeat } from 'react-icons/fi';
+import type { ReactNode } from 'react';
+import styles from './Home.module.css';
+import type { ComponentProps } from 'react';
 
 const TODAY = new Date();
 
@@ -18,8 +21,11 @@ type MonthlyBalances = Record<string, number[]>;
 type AccountDisplay = {
   id: Account['id'];
   name: Account['name'];
-  avarageBalances: MonthlyBalance;
+  averageBalances: MonthlyBalance;
 };
+
+type Header = ComponentProps<typeof Table>['headers'][0];
+type Row = ComponentProps<typeof Table>['rows'][0];
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +38,7 @@ const Home = () => {
     totalBalance += x.currentBalance;
 
     const balancePerMonth: MonthlyBalances = {};
-    const avarageBalances: MonthlyBalance = {};
+    const averageBalances: MonthlyBalance = {};
 
     x.balances.forEach((y) => {
       const month = format(new Date(y.date), 'yyyyMM');
@@ -43,22 +49,105 @@ const Home = () => {
 
     Object.keys(balancePerMonth).forEach((month) => {
       const balances = balancePerMonth[month] || [];
-      const avarageBalance = average(balances);
-      avarageBalances[month] = avarageBalance;
+      const averageBalance = average(balances);
+      averageBalances[month] = averageBalance;
       totalBalancePerMonth[month] =
-        (totalBalancePerMonth[month] || 0) + avarageBalance;
+        (totalBalancePerMonth[month] || 0) + averageBalance;
     });
 
     return {
       id: x.id,
       name: x.name,
-      avarageBalances,
+      averageBalances: averageBalances,
     };
   });
 
   const onRefreshClick = async () => {
     await dispatch(getAll());
   };
+
+  const headers: Header[] = [
+    {
+      name: 'Account',
+      style: { width: 10 },
+    },
+    ...Array.from(Array(6)).map((_, i) => {
+      const date = new Date();
+      date.setDate(1);
+      date.setMonth(TODAY.getMonth() - i);
+      return {
+        name: `${date.getFullYear()}-${date.getMonth() + 1}`,
+        style: { width: 100 },
+      };
+    }),
+  ];
+
+  const rows: Row[] = accountsDisplay.map((x) => {
+    const cells = [x.name];
+    console.log('id', x.id.toString());
+    return {
+      id: `${x.name}-${x.id}`,
+      cells: [
+        ...cells,
+        ...Array.from(Array(6)).map((_, i) => {
+          const date = new Date();
+          date.setMonth(TODAY.getMonth() - i);
+          const month = format(date, 'yyyyMM');
+          const b = x.averageBalances[month] || 0;
+
+          date.setMonth(TODAY.getMonth() - i - 1);
+          const prevMonth = format(date, 'yyyyMM');
+          const c = x.averageBalances[prevMonth] || 0;
+          const diff = b - c;
+
+          const diffText =
+            diff >= 0 ? `+ ${displayInYen(diff)}` : `${displayInYen(diff)}`;
+          const diffColor = diff >= 0 ? '#146c43' : '#842029';
+
+          return (
+            <div key={`${date.getFullYear()}-${date.getMonth()}-${i}`}>
+              {b > 0 || b < 0 ? displayInYen(b) : ''}{' '}
+              <span className={styles.diff} style={{ color: diffColor }}>
+                {diffText}
+              </span>
+            </div>
+          ) as ReactNode;
+        }),
+      ],
+    };
+  });
+  rows.push({
+    id: 'total_averages',
+    cells: [
+      <strong>Total Averages</strong>,
+      ...Array.from(Array(6)).map((_, i) => {
+        const date = new Date();
+        date.setDate(1);
+        date.setMonth(TODAY.getMonth() - i);
+        const month = format(date, 'yyyyMM');
+        const b = totalBalancePerMonth[month] || 0;
+
+        date.setMonth(TODAY.getMonth() - i - 1);
+        const prevMonth = format(date, 'yyyyMM');
+        const c = totalBalancePerMonth[prevMonth] || 0;
+        const diff = b - c;
+
+        const diffText =
+          diff >= 0 ? `+ ${displayInYen(diff)}` : `${displayInYen(diff)}`;
+        const diffColor = diff >= 0 ? '#146c43' : '#842029';
+
+        return (
+          <div key={`${date.getMonth()}`}>
+            <b>{b > 0 || b < 0 ? displayInYen(b) : ''}</b>
+            <span className={styles.diff} style={{ color: diffColor }}>
+              {diffText}
+            </span>
+          </div>
+        );
+      }),
+    ],
+    style: { borderTop: '2px solid #111' },
+  });
 
   return (
     <Container style={{ marginTop: 10 }}>
@@ -77,59 +166,14 @@ const Home = () => {
       </div>
 
       <h2>Balances</h2>
-      <Table bordered>
-        <thead>
-          <tr>
-            <th style={{ width: 5 }}>#</th>
-            <th style={{ width: 5 }}>Account</th>
-            {Array.from(Array(6)).map((_, i) => {
-              const date = new Date();
-              date.setMonth(TODAY.getMonth() - i);
-              return (
-                <th key={i} style={{ width: 100 }}>
-                  {date.getFullYear()}-{date.getMonth() + 1}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {accountsDisplay.map((x) => {
-            return (
-              <tr key={x.name}>
-                <td>{x.id}</td>
-                <td>{x.name}</td>
-                {Array.from(Array(6)).map((_, i) => {
-                  const date = new Date();
-                  date.setMonth(TODAY.getMonth() - i);
-                  const month = format(date, 'yyyyMM');
-                  const b = x.avarageBalances[month] || 0;
-                  return (
-                    <td key={i}>{b > 0 || b < 0 ? displayInYen(b) : ''}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-          <tr>
-            <td></td>
-            <td>
-              <b>Total Average</b>
-            </td>
-            {Array.from(Array(6)).map((_, i) => {
-              const date = new Date();
-              date.setMonth(TODAY.getMonth() - i);
-              const month = format(date, 'yyyyMM');
-              const b = totalBalancePerMonth[month] || 0;
-              return (
-                <td key={i}>
-                  <b>{b > 0 || b < 0 ? displayInYen(b) : ''}</b>
-                </td>
-              );
-            })}
-          </tr>
-        </tbody>
-      </Table>
+      <Table
+        bordered
+        headers={headers}
+        rows={rows}
+        color="#084298"
+        textColor="#111"
+        tableStyle={{ borderColor: '#dee2e6' }}
+      />
     </Container>
   );
 };
