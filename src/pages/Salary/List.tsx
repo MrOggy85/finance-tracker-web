@@ -70,67 +70,71 @@ const SalaryList = () => {
     },
   ];
 
-  const rows: Row[] = salaries.map((x) => {
-    const sumMonthlySalary = getSumMonthlySalary(
-      x.baseSalary,
-      x.deemedLabor,
-      x.lifePlan
-    );
-    const grossSalary = getGrossSalary(
-      sumMonthlySalary,
-      x.insufficientDeemedLabor,
-      x.lifePlanSubsidy,
-      x.commuterAllowance + x.remoteWorkerPay,
-      x.stockOwnershipSubsidy
-    );
-    const sumSocialInsurance = getSumSocialInsurance(
-      x.healthInsurance,
-      x.pension,
-      x.unemployment
-    );
-    const totalDeductible = getTotalDeductibles(
-      sumSocialInsurance,
-      x.incomeTax,
-      x.residentTax,
-      x.lifePlan,
-      x.stockOwnership,
-      x.taxExcess
-    );
+  const rows: Row[] = [...salaries]
+    .sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+    .map((x) => {
+      const sumMonthlySalary = getSumMonthlySalary(
+        x.baseSalary,
+        x.deemedLabor,
+        x.lifePlan
+      );
+      const grossSalary = getGrossSalary(
+        sumMonthlySalary,
+        x.insufficientDeemedLabor,
+        x.lifePlanSubsidy,
+        x.commuterAllowance + x.remoteWorkerPay,
+        x.stockOwnershipSubsidy
+      );
+      const sumSocialInsurance = getSumSocialInsurance(
+        x.healthInsurance,
+        x.pension,
+        x.unemployment
+      );
+      const totalDeductible = getTotalDeductibles(
+        sumSocialInsurance,
+        x.incomeTax,
+        x.residentTax,
+        x.lifePlan,
+        x.stockOwnership,
+        x.taxExcess
+      );
 
-    const netSalary = getNetSalary(grossSalary, totalDeductible);
+      const netSalary = getNetSalary(grossSalary, totalDeductible);
 
-    const stock =
-      x.stockOwnership > 0
-        ? `${displayInYen(x.stockOwnership + x.stockOwnershipSubsidy)}`
-        : '-';
+      const stock =
+        x.stockOwnership > 0
+          ? `${displayInYen(x.stockOwnership + x.stockOwnershipSubsidy)}`
+          : '-';
 
-    const ideco = `${displayInYen(x.lifePlan + x.lifePlanSubsidy)}`;
+      const ideco = `${displayInYen(x.lifePlan + x.lifePlanSubsidy)}`;
 
-    return {
-      id: '',
-      cells: [
-        <Button
-          variant="danger"
-          disabled={loading}
-          onClick={() => {
-            const yes = confirm(`remove ${x.id}, ${x.date}`);
-            if (yes) {
-              onTrashConfirmClick(x.id);
-            }
-          }}
-          loading={loading}
-          content={<FiTrash2 />}
-        />,
-        x.date,
-        displayInYen(grossSalary),
-        displayInYen(netSalary),
-        displayInYen(x.incomeTax),
-        displayInYen(x.residentTax),
-        stock,
-        ideco,
-      ],
-    };
-  });
+      return {
+        id: x.date + netSalary,
+        cells: [
+          <Button
+            variant="danger"
+            disabled={loading}
+            onClick={() => {
+              const yes = confirm(`remove ${x.id}, ${x.date}`);
+              if (yes) {
+                onTrashConfirmClick(x.id);
+              }
+            }}
+            loading={loading}
+            content={<FiTrash2 />}
+          />,
+          x.date,
+          displayInYen(grossSalary),
+          displayInYen(netSalary),
+          displayInYen(x.incomeTax),
+          displayInYen(x.residentTax),
+          stock,
+          ideco,
+        ],
+      };
+    });
 
   return (
     <Container style={{ marginTop: 10, marginBottom: 30 }}>
