@@ -4,7 +4,7 @@ import { FiTrash2, FiEdit, FiRepeat, FiPlusCircle } from 'react-icons/fi';
 import Button from '../../components/Button';
 import DateText from '../../components/DateText';
 import displayInYen from '../../core/displayInYen';
-import { getAll } from '../../core/redux/furusatoSlice';
+import { getAll } from '../../core/redux/slices/furusato';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 

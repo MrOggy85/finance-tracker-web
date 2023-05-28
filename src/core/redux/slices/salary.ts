@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { EmptyObject } from '../../types';
-import * as salary from '../db/salary';
-import type { Salary } from '../db/types';
+import type { EmptyObject } from '../../../types';
+import * as salary from '../../db/salary';
+import type { Salary } from '../../db/types';
 
 const NAMESPACE = 'salary';
 
@@ -31,7 +31,7 @@ export const remove = createAsyncThunk<void, number, EmptyObject>(
   }
 );
 
-const salarySlice = createSlice({
+export const salarySlice = createSlice({
   name: NAMESPACE,
   initialState: {
     list: [] as Salary[],
@@ -71,5 +71,3 @@ const salarySlice = createSlice({
     });
   },
 });
-
-export default salarySlice;

@@ -4,7 +4,7 @@ import { Container, Button, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import displayInYen from '../../core/displayInYen';
-import { add } from '../../core/redux/salarySlice';
+import { add } from '../../core/redux/slices/salary';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import {
   getGrossSalary,

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmptyObject } from '../../types';
-import * as furusatoDb from '../db/furusato';
-import type { Furusato as Model } from './types';
+import { EmptyObject } from '../../../types';
+import * as furusatoDb from '../../db/furusato';
+import type { Furusato as Model } from '../types';
 
 const NAMESPACE = 'furusato';
 
@@ -32,7 +32,7 @@ export const update = createAsyncThunk<void, Update, EmptyObject>(
   }
 );
 
-const furusatoSlice = createSlice({
+export const furusatoSlice = createSlice({
   name: NAMESPACE,
   initialState: {
     models: [] as Model[],
@@ -60,5 +60,3 @@ const furusatoSlice = createSlice({
       });
   },
 });
-
-export default furusatoSlice;

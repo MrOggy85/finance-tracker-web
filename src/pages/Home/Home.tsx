@@ -7,7 +7,7 @@ import displayInYen from '../../core/displayInYen';
 import type { Account } from '../../core/redux/types';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
-import { getAll } from '../../core/redux/accountSlice';
+import { getAll } from '../../core/redux/slices/account';
 import styles from './Home.module.css';
 
 const TODAY = new Date();

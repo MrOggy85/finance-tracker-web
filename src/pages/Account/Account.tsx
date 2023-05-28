@@ -19,7 +19,7 @@ import {
   addBalance as addBalanceAction,
   rename,
   getAll as getAllAccounts,
-} from '../../core/redux/accountSlice';
+} from '../../core/redux/slices/account';
 import displayInYen from '../../core/displayInYen';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';

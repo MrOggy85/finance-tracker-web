@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { EmptyObject } from '../../types';
-import * as account from '../db/account';
-import * as balance from '../db/balance';
-import type { Account } from './types';
+import { EmptyObject } from '../../../types';
+import * as account from '../../db/account';
+import * as balance from '../../db/balance';
+import type { Account } from '../types';
 
 const NAMESPACE = 'account';
 
@@ -78,7 +78,7 @@ export const rename = createAsyncThunk<
   thunkApi.dispatch(getAll());
 });
 
-const accountSlice = createSlice({
+export const accountSlice = createSlice({
   name: NAMESPACE,
   initialState: {
     accounts: [] as Account[],
@@ -111,5 +111,3 @@ const accountSlice = createSlice({
       });
   },
 });
-
-export default accountSlice;

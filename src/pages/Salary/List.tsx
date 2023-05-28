@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 import { Table } from '@otaku/otaku-ui';
 import Button from '../../components/Button';
 import displayInYen from '../../core/displayInYen';
-import { getAll, remove } from '../../core/redux/salarySlice';
+import { getAll, remove } from '../../core/redux/slices/salary';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 import {

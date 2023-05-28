@@ -3,7 +3,7 @@ import { Container, InputGroup, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { add, update } from '../../core/redux/furusatoSlice';
+import { add, update } from '../../core/redux/slices/furusato';
 import { useAppDispatch } from '../../core/redux/useAppDispatch';
 import { useAppSelector } from '../../core/redux/useAppSelector';
 

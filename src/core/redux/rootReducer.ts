@@ -1,6 +1,6 @@
-import accountSlice from './accountSlice';
-import furusatoSlice from './furusatoSlice';
-import salarySlice from './salarySlice';
+import { accountSlice } from './slices/account';
+import { furusatoSlice } from './slices/furusato';
+import { salarySlice } from './slices/salary';
 
 const rootReducer = {
   accounts: accountSlice.reducer,
