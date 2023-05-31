@@ -11,6 +11,8 @@ import SalaryList from './pages/Salary/List';
 import SalaryEntry from './pages/Salary/Entry';
 import FurusatoList from './pages/Tax/FurusatoList';
 import FurusatoDetails from './pages/Tax/FurusatoDetails';
+import PersonalBuyingPowerList from './pages/PersonalBuyingPower/List';
+import PersonalBuyingPowerEntry from './pages/PersonalBuyingPower/Entry';
 import '@otaku/otaku-ui/lib/index.css';
 
 type LinkItemProps = {
@@ -64,6 +66,9 @@ function App() {
         <NavItem>
           <LinkItem url="/furusato" text="Furusato" />
         </NavItem>
+        <NavItem>
+          <LinkItem url="/product" text="Product" />
+        </NavItem>
 
         {/* <NavItem>
           <LinkItem url="/daily-check-in" text="Check-In" />
@@ -77,6 +82,8 @@ function App() {
         <Route path="/salary/add" element={<SalaryEntry />} />
         <Route path="/furusato" element={<FurusatoList />} />
         <Route path="/furusato/:id" element={<FurusatoDetails />} />
+        <Route path="/product" element={<PersonalBuyingPowerList />} />
+        <Route path="/product/:id" element={<PersonalBuyingPowerEntry />} />
       </Routes>
       <Future visible={location.pathname === '/future'} />
       <DailyCheckIn visible={location.pathname === '/daily-check-in'} />

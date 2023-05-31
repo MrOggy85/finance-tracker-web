@@ -7,8 +7,30 @@ export type Account = {
 export type Balance = {
   id: number;
   amount: number;
+  /**
+   * example from response: "2022-03-30T20:09:39.712Z"
+   * mapped using `date-fns/parseISO` into Date
+   */
   date: Date;
   accountId: number;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  entries: ProductEntry[];
+};
+
+export type ProductEntry = {
+  id: number;
+  price: number;
+  personalBuyingValue: number;
+  /**
+   * example from response: "2022-03-30T20:09:39.712Z"
+   * mapped using `date-fns/parseISO` into Date
+   */
+  date: Date;
+  productId: number;
 };
 
 export type Salary = {
