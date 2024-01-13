@@ -8,7 +8,7 @@ import {
   FiX,
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { ComponentProps, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { Button, Select } from '@otaku/otaku-ui';
@@ -30,6 +30,12 @@ const List = () => {
   const [newProductEntryDate, setNewProductEntryDate] = useState(new Date());
   const [newProductEntryPrice, setNewProductEntryPrice] = useState(0);
   const [newProductEntryPower, setNewProductEntryPower] = useState(0);
+
+  const [yearlySalary, setYearlySalary] = useState(12929984);
+
+  useEffect(() => {
+    setNewProductEntryPower(yearlySalary / newProductEntryPrice);
+  }, [newProductEntryPrice, yearlySalary]);
 
   const addProductEntry = (id: number) => {
     dispatch(
@@ -198,7 +204,7 @@ const List = () => {
               <td>{x.id}</td>
               <td>{format(parseISO(x.date), 'yyyy-MM-dd')}</td>
               <td>{displayInYen(x.price)}</td>
-              <td>{displayInYen(x.personalBuyingValue)}</td>
+              <td>{x.personalBuyingValue}</td>
             </tr>
           ))}
         </tbody>
@@ -210,7 +216,6 @@ const List = () => {
             <th style={{ width: '115px' }}></th>
             <th style={{ width: '50px' }}>ID</th>
             <th style={{ width: '250px' }}>Name</th>
-            <th style={{ width: '150px' }}>Current Balance</th>
             <th style={{ display: 'flex' }}></th>
           </tr>
         </thead>
@@ -314,6 +319,20 @@ const List = () => {
           </tr>
         </tbody>
       </Table>
+      <Container>
+        <Input
+          label="Yearly Salary"
+          value={yearlySalary.toString()}
+          type="number"
+          disabled={loading}
+          onChange={(value) => {
+            setYearlySalary(Number(value));
+          }}
+        />
+        <p>
+          <i>{displayInYen(yearlySalary)}</i>
+        </p>
+      </Container>
     </Container>
   );
 };
